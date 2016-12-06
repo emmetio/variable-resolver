@@ -1,0 +1,31 @@
+{
+  "name": "@emmetio/variable-resolver",
+  "version": "0.0.1",
+  "description": "Resolves ${variables} in given parsed abbreviation tree",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emmetio/variable-resolver.git"
+  },
+  "keywords": [
+    "emmet",
+    "variable",
+    "parser"
+  ],
+  "author": "Sergey Chikuyonok <serge.che@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emmetio/variable-resolver/issues"
+  },
+  "homepage": "https://github.com/emmetio/variable-resolver#readme",
+  "devDependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-register": "^6.18.0",
+    "mocha": "^3.1.2",
+    "rollup": "^0.36.3",
+    "rollup-watch": "^2.5.0"
+  }
+}
