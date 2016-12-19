@@ -31,4 +31,8 @@ describe('Variable Resolver', () => {
     it('named node child resolve', () => {
         assert.equal(expand('a>b{[ ${child} ]}>c'), '<a><b>[ <c></c> ]</b></a>');
     });
+
+    it('skip fields', () => {
+        assert.equal(expand('{${0} ${1:foo} ${bar}}'), '${0} ${1:foo} bar');
+    });
 });

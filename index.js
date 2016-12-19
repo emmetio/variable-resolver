@@ -85,7 +85,7 @@ function replaceInString(string, variables) {
  * @return {Object}
  */
 function createModel(string) {
-    const reVariable = /\$\{([\w\-]+)\}/g;
+    const reVariable = /\$\{([a-z][\w\-]*)\}/ig;
     const escapeCharCode = 92; // `\` symbol
     const variables = [];
 
