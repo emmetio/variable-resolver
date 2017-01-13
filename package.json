@@ -3,14 +3,11 @@
   "version": "0.1.1",
   "description": "Resolves ${variables} in given parsed abbreviation tree",
   "main": "dist/variable-resolver.cjs.js",
-  "jsnext:main": "dist/variable-resolver.es.js",
+  "module": "dist/variable-resolver.es.js",
   "scripts": {
     "test": "mocha",
-    "build": "npm run build:cjs && npm run build:es",
-    "build:cjs": "rollup -o dist/variable-resolver.cjs.js -f cjs ./index.js",
-    "build:es": "rollup -o dist/variable-resolver.es.js -f es ./index.js",
-    "prepublish": "npm run test && npm run build",
-    "watch": "rollup -w -o dist/variable-resolver.cjs.js -f cjs ./index.js"
+    "build": "rollup -c",
+    "prepublish": "npm run test && npm run build"
   },
   "repository": {
     "type": "git",
@@ -32,7 +29,6 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
     "babel-register": "^6.18.0",
     "mocha": "^3.1.2",
-    "rollup": "^0.36.3",
-    "rollup-watch": "^2.5.0"
+    "rollup": "^0.41.1"
   }
 }
