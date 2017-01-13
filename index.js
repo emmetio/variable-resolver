@@ -15,37 +15,17 @@ export default function replaceVariables(tree, variables) {
 
 function replaceInNode(node, variables) {
     // Replace variables in attributes.
-    // Force `${child}` variable to resolve to empty string for attributes
     const attrs = node.attributes;
-    const vars = Object.assign({}, variables, {child: ''});
 
     for (let i = 0, il = attrs.length; i < il; i++) {
         const attr = attrs[i];
         if (typeof attr.value === 'string') {
-            node.setAttribute(attr.name, replaceInString(attr.value, vars));
+            node.setAttribute(attr.name, replaceInString(attr.value, variables));
         }
     }
 
-    // A special case for `${child}` variable in node content: for it’s first
-    // occurance, split current node in two and put current node’s children
-    // between them so the final output will look like the childrend are inside
-    // current text value
     if (node.value != null) {
-        let splitPos = -1;
-        vars.child = (string, range, offset) => {
-            if (splitPos === -1) {
-                splitPos = offset;
-            }
-            return '';
-        }
-
-        node.value = replaceInString(node.value, vars);
-        if (splitPos !== -1) {
-            // explicitly replace variables inside current node since after
-            // split its current children will be off parent’s `walk` iteration
-            replaceVariables(node, variables);
-            splitNodeAtValuePos(node, splitPos);
-        }
+        node.value = replaceInString(node.value, variables);
     }
 
     return node;
@@ -131,43 +111,4 @@ function createModel(string) {
     }
 
     return {string, variables};
-}
-
-/**
- * Splits given `node` in two parts at given `pos` character index of nodes’
- * `value` property and inserts it’s content between these nodes. It is used to
- * imitate node’s content output into `${child}` variable of node value.
- * The node is splitted in-place in its tree
- * @param  {Node} node
- * @param  {Number} range
- */
-function splitNodeAtValuePos(node, pos) {
-    const beforeText = node.value.slice(0, pos);
-    const afterText = node.value.slice(pos);
-
-    if (!node.name) {
-        // splitting text-only node
-        const copy = node.clone();
-        copy.value = beforeText;
-        node.value = afterText;
-        node.parent.insertBefore(copy, node);
-        while (node.firstChild) {
-            node.parent.insertBefore(node.firstChild, node);
-        }
-    } else if (node.children.length) {
-        // different strategy to split named node: create two distinct text nodes
-        // and insert them before and after node’s children
-        const before = node.create();
-        const after = node.create();
-
-        before.value = beforeText;
-        after.value = afterText;
-        node.value = null;
-
-        node.insertBefore(before, node.firstChild);
-        node.appendChild(after);
-    } else {
-        // child-less named node: simply update content
-        node.value = beforeText + afterText;
-    }
 }

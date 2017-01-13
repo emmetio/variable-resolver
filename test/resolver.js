@@ -21,17 +21,6 @@ describe('Variable Resolver', () => {
         assert.equal(expand('div>{${foo} ${unknown}}'), '<div>bar unknown</div>');
     });
 
-    it('child resolve', () => {
-        assert.equal(expand('{<!-- ${child} -->}'), '<!--  -->');
-        assert.equal(expand('{<!-- ${child} -->}>span*2+b'), '<!-- <span*2@1></span><span*2@2></span><b></b> -->');
-        assert.equal(expand('{<!-- ${child} foo ${child} -->}>span'), '<!-- <span></span> foo  -->');
-        assert.equal(expand('{( ${child} )}>span>{[ ${child} ]}>b'), '( <span>[ <b></b> ]</span> )');
-    });
-
-    it('named node child resolve', () => {
-        assert.equal(expand('a>b{[ ${child} ]}>c'), '<a><b>[ <c></c> ]</b></a>');
-    });
-
     it('skip fields', () => {
         assert.equal(expand('{${0} ${1:foo} ${bar}}'), '${0} ${1:foo} bar');
     });
