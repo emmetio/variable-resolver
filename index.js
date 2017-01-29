@@ -9,6 +9,7 @@
  * @return {Node}
  */
 export default function replaceVariables(tree, variables) {
+	variables = variables || {};
     tree.walk(node => replaceInNode(node, variables));
     return tree;
 }
