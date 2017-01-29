@@ -1,6 +1,6 @@
 {
   "name": "@emmetio/variable-resolver",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Resolves ${variables} in given parsed abbreviation tree",
   "main": "dist/variable-resolver.cjs.js",
   "module": "dist/variable-resolver.es.js",
